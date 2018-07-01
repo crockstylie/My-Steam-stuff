@@ -8,9 +8,11 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/public/partials
+ * @package    My_Steam_Stuff
+ * @subpackage My_Steam_Stuff/public/partials
  */
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+
+<h1>COUCOU le public display !!! :)</h1>

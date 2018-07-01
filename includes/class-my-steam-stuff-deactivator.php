@@ -1,26 +1,18 @@
 <?php
-
-/**
- * Fired during plugin deactivation
- *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- */
-
 /**
  * Fired during plugin deactivation.
  *
  * This class defines all code necessary to run during the plugin's deactivation.
  *
+ * @link       http://example.com
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ *
+ * @since      1.0.0
+ * @package    My_Steam_Stuff
+ * @subpackage My_Steam_Stuff/includes
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name_Deactivator {
+class My_Steam_Stuff_Deactivator {
 
 	/**
 	 * Short Description. (use period)
