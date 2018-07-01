@@ -46,6 +46,25 @@ class My_Steam_Stuff_Admin {
 
 	}
 
+	public function register_mss_admin_menu_elements(  ) {
+		add_menu_page(
+			'My Steam stuff',
+			'My Steam stuff',
+			'activate_plugins',
+			'mss',
+			array(
+				$this,
+				'register_mss_admin_display'
+			),
+			'dashicons-heart',
+			'2'
+		);
+	}
+
+	public function register_mss_admin_display(  ) {
+		require_once plugin_dir_path( __FILE__ ) . 'partials/my-steam-stuff-admin-display.php';
+	}
+	
 	/**
 	 * Register the stylesheets for the admin area.
 	 *

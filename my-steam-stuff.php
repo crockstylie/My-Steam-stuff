@@ -43,7 +43,7 @@ define( 'MY_STEAM_STUFF_VERSION', '1.0.0' );
  */
 function activate_my_steam_stuff() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-my-steam-stuff-activator.php';
-	Plugin_Name_Activator::activate();
+	My_Steam_Stuff_Activator::activate();
 }
 
 /**
@@ -52,7 +52,7 @@ function activate_my_steam_stuff() {
  */
 function deactivate_my_steam_stuff() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-my-steam-stuff-deactivator.php';
-	Plugin_Name_Deactivator::deactivate();
+	My_Steam_Stuff_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_my_steam_stuff' );
@@ -75,7 +75,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-my-steam-stuff.php';
  */
 function run_my_steam_stuff() {
 
-	$plugin = new Plugin_Name();
+	$plugin = new My_Steam_Stuff();
 	$plugin->run();
 
 }
