@@ -151,6 +151,7 @@ class My_Steam_Stuff {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_mss_admin_menu_elements' );
+		$this->loader->add_action('admin_init', $plugin_admin, 'register_mss_settings');
 
 	}
 
@@ -167,6 +168,8 @@ class My_Steam_Stuff {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+		$this->loader->add_shortcode('mss_game_list', $plugin_public, 'mss_game_list');
 
 	}
 

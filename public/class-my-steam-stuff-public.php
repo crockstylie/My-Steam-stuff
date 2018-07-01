@@ -45,6 +45,16 @@ class My_Steam_Stuff_Public {
 
 	}
 
+	public function mss_game_list_shortcode(){
+		ob_start();
+		require_once plugin_dir_path( __FILE__ ) . 'partials/my-steam-stuff-public-display.php';
+		$content = ob_get_clean();
+		return $content;
+	}
+	public function mss_game_list($atts, $content = ""){
+		return do_shortcode($this->mss_game_list_shortcode());
+	}
+
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *

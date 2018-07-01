@@ -5,14 +5,33 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       http://example.com
+ * @link       http://crock.fr
  * @since      1.0.0
  *
  * @package    My_Steam_Stuff
  * @subpackage My_Steam_Stuff/admin/partials
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die;
+}
+
+global $wpdb;
 ?>
-
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
-
-<h1>COUCOU le admin display !!! :)</h1>
+<div class="wrap">
+	<?php
+    settings_errors();
+  ?>
+  <h1>Paramètres My Steam stuff</h1>
+  <ul>
+    <li><a href="https://steamcommunity.com/dev/apikey" target="_blank">Pour récupérer sa clé d'API Steam</a></li>
+    <li><a href="http://steamrep.com" target="_blank">Pour récupérer son SteamID</a></li>
+  </ul>
+  <form method="post" action="options.php">
+	  <?php
+      settings_fields( 'mss_settings' );
+      do_settings_sections( 'mss_settings' );
+      submit_button();
+	  ?>
+  </form>
+</div>

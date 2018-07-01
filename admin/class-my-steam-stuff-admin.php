@@ -46,6 +46,9 @@ class My_Steam_Stuff_Admin {
 
 	}
 
+	/**
+	 * Registers the admin menu element
+	 */
 	public function register_mss_admin_menu_elements(  ) {
 		add_menu_page(
 			'My Steam stuff',
@@ -61,8 +64,151 @@ class My_Steam_Stuff_Admin {
 		);
 	}
 
+	/**
+	 * Registers the admin page display
+	 */
 	public function register_mss_admin_display(  ) {
 		require_once plugin_dir_path( __FILE__ ) . 'partials/my-steam-stuff-admin-display.php';
+	}
+
+	/**
+	 * Registers the defaults settings values
+	 *
+	 * @return array
+	 */
+	public function default_mss_settings_values() {
+		$defaults = array(
+			'key'                       => '491FEDB45824501BAA0025982807E08A',
+			'steamid'                   => '76561198048836101',
+			'format'                    => 'json',
+			'include_played_free_games' => '1',
+			'include_appinfo'           => '1'
+		);
+		return $defaults;
+	}
+
+	public function mss_settings_form_callback() {
+		$options = get_option('mss_settings');
+	}
+
+	public function mss_key_setting_callback() {
+		$options = get_option( 'mss_settings' );
+		echo '<input type="text" id="mss-key" name="mss_settings[key]" value="' . $options['key'] . '" />';
+	}
+
+	public function mss_steamid_setting_callback() {
+		$options = get_option( 'mss_settings' );
+		echo '<input type="text" id="mss-steamid" name="mss_settings[steamid]" value="' . $options['steamid'] . '" />';
+	}
+
+	public function mss_format_setting_callback() {
+		$options = get_option( 'mss_settings' );
+		$radioInputDisplay = '<input type="radio" name="mss_settings[format]" value="json"';
+		$radioInputDisplay .= checked('json', $options['format'], false);
+		$radioInputDisplay .= '>json';
+		$radioInputDisplay .= '&nbsp;&nbsp;';
+		$radioInputDisplay .= '<input type="radio" name="mss_settings[format]" value="xml"';
+		$radioInputDisplay .= checked('xml', $options['format'], false);
+		$radioInputDisplay .= '>xml';
+		$radioInputDisplay .= '&nbsp;&nbsp;';
+		$radioInputDisplay .= '<input type="radio" name="mss_settings[format]" value="vdf"';
+		$radioInputDisplay .= checked('vdf', $options['format'], false);
+		$radioInputDisplay .= '>vdf';
+		echo $radioInputDisplay;
+	}
+
+	public function mss_include_played_free_games_setting_callback() {
+		$options = get_option( 'mss_settings' );
+		$radioInputDisplay = '<input type="radio" name="mss_settings[include_played_free_games]" value="1"';
+		$radioInputDisplay .= checked(1, $options['include_played_free_games'], false);
+		$radioInputDisplay .= '>Oui';
+		$radioInputDisplay .= '&nbsp;&nbsp;';
+		$radioInputDisplay .= '<input type="radio" name="mss_settings[include_played_free_games]" value="0"';
+		$radioInputDisplay .= checked(0, $options['include_played_free_games'], false);
+		$radioInputDisplay .= '>Non';
+		echo $radioInputDisplay;
+	}
+
+	public function mss_include_appinfo_setting_callback() {
+		$options = get_option( 'mss_settings' );
+		$radioInputDisplay = '<input type="radio" name="mss_settings[include_appinfo]" value="1"';
+		$radioInputDisplay .= checked(1, $options['include_appinfo'], false);
+		$radioInputDisplay .= '>Oui';
+		$radioInputDisplay .= '&nbsp;&nbsp;';
+		$radioInputDisplay .= '<input type="radio" name="mss_settings[include_appinfo]" value="0"';
+		$radioInputDisplay .= checked(0, $options['include_appinfo'], false);
+		$radioInputDisplay .= '>Non';
+		echo $radioInputDisplay;
+	}
+
+	public function validate_mss_settings( $input ) {
+		$output = array();
+		foreach( $input as $key => $value ) {
+			if( isset( $input[$key] ) ) {
+				$output[$key] = strip_tags( stripslashes( $input[ $key ] ) );
+			}
+		}
+		return apply_filters( 'validate_input_examples', $output, $input );
+	}
+
+	public function register_mss_settings(  ) {
+		if( false == get_option( 'mss_settings' ) ) {
+			$default_array = $this->default_mss_settings_values();
+			update_option( 'mss_settings', $default_array );
+		}
+
+		add_settings_section(
+			'mss_settings_section',
+			__( 'Options pour My Steam stuff', 'my-steam-stuff-plugin' ),
+			array( $this, 'mss_settings_form_callback'),
+			'mss_settings'
+		);
+
+		add_settings_field(
+			'key',
+			__( 'Clé API Steam', 'my-steam-stuff-plugin' ),
+			array( $this, 'mss_key_setting_callback'),
+			'mss_settings',
+			'mss_settings_section'
+		);
+
+		add_settings_field(
+			'steamid',
+			__( 'Votre SteamID', 'my-steam-stuff-plugin' ),
+			array( $this, 'mss_steamid_setting_callback'),
+			'mss_settings',
+			'mss_settings_section'
+		);
+
+		add_settings_field(
+			'format',
+			__( 'Format de la réponse', 'my-steam-stuff-plugin' ),
+			array( $this, 'mss_format_setting_callback'),
+			'mss_settings',
+			'mss_settings_section'
+		);
+
+		add_settings_field(
+			'include_played_free_games',
+			__( 'Inclure les jeux gratuits auxquels vous avez déjà joué', 'my-steam-stuff-plugin' ),
+			array( $this, 'mss_include_played_free_games_setting_callback'),
+			'mss_settings',
+			'mss_settings_section'
+		);
+
+		add_settings_field(
+			'include_appinfo',
+			__( 'Inclure les informations sur les jeux (titres, images)', 'my-steam-stuff-plugin' ),
+			array( $this, 'mss_include_appinfo_setting_callback'),
+			'mss_settings',
+			'mss_settings_section'
+		);
+
+		register_setting(
+			'mss_settings',
+			'mss_settings',
+			array( $this, 'validate_mss_settings')
+		);
 	}
 	
 	/**
