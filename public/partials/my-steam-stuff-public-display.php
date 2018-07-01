@@ -12,4 +12,4 @@
  * @subpackage My_Steam_Stuff/public/partials
  */
 ?>
-<div class="grid" id="mss-game-list"></div>
+<div id="mss-game-list"></div>

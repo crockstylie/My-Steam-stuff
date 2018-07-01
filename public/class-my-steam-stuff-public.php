@@ -62,19 +62,13 @@ class My_Steam_Stuff_Public {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in My_Steam_Stuff_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The My_Steam_Stuff_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->my_steam_stuff, plugin_dir_url( __FILE__ ) . 'css/my-steam-stuff-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style(
+			$this->my_steam_stuff,
+			plugin_dir_url( __FILE__ ) . 'css/my-steam-stuff-public.css',
+			array(),
+			$this->version,
+			'all'
+		);
 
 	}
 
@@ -86,6 +80,22 @@ class My_Steam_Stuff_Public {
 	public function enqueue_scripts() {
 
 		global $wpdb;
+
+		wp_enqueue_script(
+			$this->my_steam_stuff . '-images-loaded',
+			'https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js',
+			array( 'jquery' ),
+			'4',
+			false
+		);
+
+		wp_enqueue_script(
+			$this->my_steam_stuff . '-masonry',
+			'https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js',
+			array( 'jquery' ),
+			'4',
+			false
+		);
 
 		wp_enqueue_script(
 			$this->my_steam_stuff,
