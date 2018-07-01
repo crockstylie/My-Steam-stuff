@@ -85,19 +85,23 @@ class My_Steam_Stuff_Public {
 	 */
 	public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in My_Steam_Stuff_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The My_Steam_Stuff_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+		global $wpdb;
 
-		wp_enqueue_script( $this->my_steam_stuff, plugin_dir_url( __FILE__ ) . 'js/my-steam-stuff-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script(
+			$this->my_steam_stuff,
+			plugin_dir_url( __FILE__ ) . 'js/my-steam-stuff-public.js',
+			array( 'jquery' ),
+			$this->version,
+			false
+		);
+
+		$mssSettingsArray = get_option( 'mss_settings' );
+
+		wp_localize_script(
+			$this->my_steam_stuff,
+			'mssSettingsArray',
+			$mssSettingsArray
+		);
 
 	}
 

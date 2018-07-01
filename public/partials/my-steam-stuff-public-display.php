@@ -12,7 +12,4 @@
  * @subpackage My_Steam_Stuff/public/partials
  */
 ?>
-
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
-
-<h1>COUCOU le public display !!! :)</h1>
+<div class="grid" id="mss-game-list"></div>
